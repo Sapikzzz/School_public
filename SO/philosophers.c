@@ -190,7 +190,7 @@ void* keyboard_listener() {
     return NULL;
 }
 
-int main(int argc, char *argv[]) {   \
+int main(int argc, char *argv[]) {
     num_philosophers = atoi(argv[1]);
     gettimeofday(&start_time, NULL);
     
