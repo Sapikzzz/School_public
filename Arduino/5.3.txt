@@ -1,8 +1,9 @@
+
+  
 #include <avr/io.h>
 #include <stdlib.h>
 #include <string.h>
 #include <util/delay.h>
-#include <avr/sfr_defs.h>
  
 #ifndef _BV
 #define _BV(bit)        (1<<(bit))
@@ -18,37 +19,35 @@
 #ifndef tbi
 #define tbi(reg,bit)    reg ^= (_BV(bit))
 #endif
-
-#ifndef bit_is_set
-#define	bit_is_set(sfr, bit)   (_SFR_BYTE(sfr) & _BV(bit))
-#endif
-
-#ifndef bit_is_clear
-#define	bit_is_clear(sfr, bit)   (!(_SFR_BYTE(sfr) & _BV(bit)))
-#endif
-	
-
+ 
 int main() {
-    DDRD = 0xFF;
-    PORTD = 0x00;
 
-    bool button_state = 0; // Przechowuje poprzedni stan przycisku
+DDRD=0xFF;
+PORTD=0x00;
+DDRB=0x00;
+PORTB=0xFF;
 
-    while (1) {
-        uint8_t current_button_state = bit_is_set(PINB, 1);
+bool button_state = 0;
+
+while (1) {
+      bool current_button_state = bit_is_clear(PINB, 1);
 
         if (current_button_state != button_state) {
             button_state = current_button_state;
 
             if (button_state == 0) {
-                tbi(PORTD, 2);
+                tbi(PORTD, 1);
+              _delay_ms(20);
             }
         }
-        if(bit_is_set(PINB, 0)){
-          sbi(PORTD, 3);
-        }
-        else{
-          cbi(PORTD, 3);
-        }
-  }
+      if(bit_is_clear(PINB, 0)){
+        _delay_ms(20);
+        sbi(PORTD, 0);
+      }
+      else{
+        _delay_ms(20);
+        cbi(PORTD, 0);
+      }
+    }
 }
+
