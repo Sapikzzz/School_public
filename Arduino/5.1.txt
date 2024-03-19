@@ -1,0 +1,43 @@
+#include <avr/io.h>
+#include <stdlib.h>
+#include <string.h>
+#include <util/delay.h>
+#include <avr/sfr_defs.h>
+ 
+#ifndef _BV
+#define _BV(bit)        (1<<(bit))
+#endif
+#ifndef sbi
+#define sbi(reg,bit)    reg |= (_BV(bit))
+#endif
+ 
+#ifndef cbi
+#define cbi(reg,bit)    reg &= ~(_BV(bit))
+#endif
+ 
+#ifndef tbi
+#define tbi(reg,bit)    reg ^= (_BV(bit))
+#endif
+
+#ifndef bit_is_set
+#define	bit_is_set(sfr, bit)   (_SFR_BYTE(sfr) & _BV(bit))
+#endif
+
+#ifndef bit_is_clear
+#define	bit_is_clear(sfr, bit)   (!(_SFR_BYTE(sfr) & _BV(bit)))
+#endif
+	
+
+int main() {
+    DDRD = 0xFF;
+    PORTD = 0x00;
+
+    while (1) {
+      if(bit_is_set(PINB, 0)){
+        PORTD = 0xFF;
+      }
+      else{
+        PORTD = 0x00;
+      }
+    }
+  }
