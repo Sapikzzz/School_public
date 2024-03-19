@@ -1,0 +1,72 @@
+
+  
+#include <avr/io.h>
+#include <stdlib.h>
+#include <string.h>
+#include <util/delay.h>
+ 
+#ifndef _BV
+#define _BV(bit)        (1<<(bit))
+#endif
+#ifndef sbi
+#define sbi(reg,bit)    reg |= (_BV(bit))
+#endif
+ 
+#ifndef cbi
+#define cbi(reg,bit)    reg &= ~(_BV(bit))
+#endif
+ 
+#ifndef tbi
+#define tbi(reg,bit)    reg ^= (_BV(bit))
+#endif
+ 
+int main() {
+
+DDRD=0xFF;
+DDRB=0x00;
+PORTB=0xFF;
+
+uint8_t led_count = 0;
+
+while (1) {    
+      PORTD = 0x00;
+      for(uint8_t i=0; i<led_count; i++){
+        sbi(PORTD, i);
+      }
+      
+      if(bit_is_clear(PINB, 3)){
+        _delay_ms(20);
+        PORTD = 0xFF;
+        led_count = 8;
+      }
+      if(bit_is_clear(PINB, 2)){
+        _delay_ms(20);
+        PORTD = 0x00;
+        led_count = 0;
+      }
+
+  
+
+      if(bit_is_clear(PINB, 0)){
+        _delay_ms(20);
+        if(bit_is_clear(PINB, 0)){
+          if(led_count > 0){
+           led_count--;
+          }
+        }
+        while (bit_is_clear(PINB, 0));
+      }
+
+      
+      if(bit_is_clear(PINB, 1)){
+        _delay_ms(20);
+        if(bit_is_clear(PINB, 1)){
+          if(led_count < 7){
+           led_count++;
+          }
+        }
+        while (bit_is_clear(PINB, 1));
+      }
+    }
+}
+
