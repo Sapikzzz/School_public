@@ -4,72 +4,75 @@
 
 #include <iostream>
 #include <chrono>
-#include "linked_list.h"
+#include "dynamic_array.h"
 
-void test_creating_list(int amount){
-    LinkedList list;
+void test_creating_array(int amount){
+    DynamicArray array;
     auto start = std::chrono::high_resolution_clock::now();
     for(int i = 0; i < amount; i++){
-        list.add_last(i);
+        array.add_last(i);
     }
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
-    std::cout << "Creating list of " << amount <<" size took: " << elapsed.count() << "s" << std::endl;
-    list.remove_all();
+    std::cout << "Creating array of " << amount <<" size took: " << elapsed.count() << "s" << std::endl;
+    array.remove_all();
 }
 
-void test_add_list_first(LinkedList& list){
+void test_add_array_first(DynamicArray& array){
     auto start = std::chrono::high_resolution_clock::now();
-    list.add_first(1000000);
+    array.add_first(1000000);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
-    std::cout << "Adding element at beginning of list took: " << elapsed.count() << "s" << std::endl;
+    std::cout << "Adding element at beginning of array took: " << elapsed.count() << "s" << std::endl;
 }
 
-void test_add_list_last(LinkedList& list){
+void test_add_array_last(DynamicArray& array){
     auto start = std::chrono::high_resolution_clock::now();
-    list.add_last(1000000);
+    array.add_last(1000000);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
-    std::cout << "Adding element at the end of the list took: " << elapsed.count() << "s" << std::endl;
+    std::cout << "Adding element at the end of the array took: " << elapsed.count() << "s" << std::endl;
 }
 
-void test_add_list_at(int index, LinkedList& list){
+void test_add_array_at(int index, DynamicArray& array){
     auto start = std::chrono::high_resolution_clock::now();
-    list.add_at(index, 1000000);
+    array.add_at(index, 1000000);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
     std::cout << "Adding element at " << index << " index took: " << elapsed.count() << "s" << std::endl;
 }
 
-void test_remove_list_first(LinkedList& list){
+void test_remove_array_first(DynamicArray& array){
     auto start = std::chrono::high_resolution_clock::now();
-    list.remove_first();
+    array.remove_first();
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
     std::cout << "Removing first element took: " << elapsed.count() << "s" << std::endl;
 }
 
-void test_remove_list_last(LinkedList& list){
+void test_remove_array_last(DynamicArray& array){
     auto start = std::chrono::high_resolution_clock::now();
-    list.remove_last();
+    array.remove_last();
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
     std::cout << "Removing last element took: " << elapsed.count() << "s" << std::endl;
 }
 
-void test_remove_list_at(int index, LinkedList& list){
+void test_remove_array_at(int index, DynamicArray& array){
     auto start = std::chrono::high_resolution_clock::now();
-    list.remove_at(index);
+    array.remove_at(index);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
     std::cout << "Removing element at " << index << " index took: " << elapsed.count() << "s" << std::endl;
 }
 
-void test_check_list_if_present(int data, LinkedList& list){
+void test_check_array_if_present(int data, DynamicArray& array){
     auto start = std::chrono::high_resolution_clock::now();
-    list.check_if_present(data);
+    array.check_if_present(data);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
     std::cout << "Checking if element is present took: " << elapsed.count() << "s" << std::endl;
 }
+
+
+
