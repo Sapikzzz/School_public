@@ -29,7 +29,7 @@ void LinkedList::add_last(int data) {
     if (head == nullptr) {
         head = new_node;
         tail = new_node;
-    } //  Jesli nie to ustawiamy nowy node jako nastepny dla taila i przesuwamy tail na nowy node
+    } //  Jesli nie to ustawiamy new_node na nastepne miejsce po tail, a nastepnie ustawiamy nowe miejsce tail na new_node
     else {
         tail->next = new_node;
         tail = new_node;
@@ -45,7 +45,7 @@ void LinkedList::add_first(int data) {
         head = new_node;
         tail = new_node;
     } //    Jesli lista nie jest pusta to ustawiamy nowy node jako head i
-    // ustawiamy nastepny node jako head
+    //     ustawiamy nastepny node jako head
     else {
         new_node->next = head;
         head = new_node;
