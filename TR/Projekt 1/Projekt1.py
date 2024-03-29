@@ -46,7 +46,7 @@ def an4(t):     # rozwiązanie analityczne z warunkami początkowymi
 
 
 t = np.linspace(0, 8, 30)   # 30 punktów
-t2 = np.linspace(0, 1.5, 300) # 300 punktów
+t2 = np.linspace(0, 8, 300) # 300 punktów
 y3 = odeint(dydt_1, y0, t2)
 y4 = odeint(dydt_skok, y0, t)   # wyznaczenie skokowej dla 30 punktów
 y4_2 = odeint(dydt_skok, y0, t2)    # wyznaczenie skokowej dla 300 punktów
