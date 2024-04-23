@@ -1,0 +1,3 @@
+E:/Strukturki/SD/Projekt_2/cmake-build-debug/CMakeFiles/Projekt_2.dir
+E:/Strukturki/SD/Projekt_2/cmake-build-debug/CMakeFiles/edit_cache.dir
+E:/Strukturki/SD/Projekt_2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
