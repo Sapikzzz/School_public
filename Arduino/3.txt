@@ -1,0 +1,79 @@
+#include <avr/io.h>
+#include <stdlib.h>
+#include <string.h>
+#include <util/delay.h>
+ 
+#ifndef _BV
+#define _BV(bit)        (1<<(bit))
+#endif
+#ifndef sbi
+#define sbi(reg,bit)    reg |= (_BV(bit))
+#endif
+ 
+#ifndef cbi
+#define cbi(reg,bit)    reg &= ~(_BV(bit))
+#endif
+
+#ifndef tbi
+#define tbi(reg,bit)    reg ^= (_BV(bit))
+#endif
+
+
+void timerInit() {
+  //Wybranie trybu pracy CTC z TOP OCR1A
+  sbi(TCCR1B, WGM12);
+  cbi(TCCR1B, WGM13);
+  cbi(TCCR1A, WGM11);
+  cbi(TCCR1A, WGM10);
+ 
+  //Wybranie dzielnika czestotliwosci - częstotliwość Atmega328: 16 MHz
+  sbi(TCCR1B, CS12);
+  cbi(TCCR1B, CS11);
+  cbi(TCCR1B, CS10);
+ 
+  //Zapisanie do OCR1A wartosci odpowiadajacej 0,5s
+  OCR1A = 31250;
+ 
+  //Uruchomienie przerwania OCIE1A
+  sbi(TIMSK1, OCIE1A);
+}
+
+// Maksymalna wartość top = 2^16 = 65356
+
+
+//volatile -informacja dla kompilatora aby nie optymalizował zmiennej, 
+//zmienna bezpieczna do wykorzystania w przerwaniach
+volatile int zmienna=0; 
+
+
+
+int main() {
+  timerInit();
+  sei(); //Uruchamia przerwania globalne
+  sbi(DDRD,PD0);
+  sbi(DDRD,PD1); 
+  sbi(DDRD,PD5);
+  
+  cbi(DDRD,PD2);  // Ustawienie bitów dla wejścia
+  sbi(PORTD,PD2);
+
+  sbi(EICRA,ISC01); //ustawienie rejestru od przerwań zewnętrznych
+  cbi(EICRA,ISC00);
+  sbi(EIMSK,INT0);
+  
+  while (1) {
+ //kod programu przełączajacy diodę LED na pinie PD0
+    tbi(PORTD, PD0);
+    _delay_ms(3000);  //zablokowanie programu nie wpływa na mruganie diodą, ponieważ to zablokowanie jest przerywane
+  }
+}
+
+ISR(TIMER1_COMPA_vect) {
+  tbi(PORTD, PD1);
+ //kod programu przełączajacy diodę LED na pinie PD1
+ //_delay_ms(5000); // Zablokowanie programu spowoduje, że następne przerwanie będzie wywołane przez co program się zablokuje i nigdy nie wyjdzie do głównej funkcji
+}
+
+ISR(INT0_vect){
+  tbi(PORTD, 5);
+}
