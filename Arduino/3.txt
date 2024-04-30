@@ -32,7 +32,8 @@ void timerInit() {
   cbi(TCCR1B, CS10);
  
   //Zapisanie do OCR1A wartosci odpowiadajacej 0,5s
-  OCR1A = 31250;
+  OCR1A = 31250; // Wybrana opcja prescalera clk/256 == 16MHz/256 = 62 500
+  // 62500 ilość operacji w ciągu jednej sekundy, więc dla 0,5s == 62500/2
  
   //Uruchomienie przerwania OCIE1A
   sbi(TIMSK1, OCIE1A);
