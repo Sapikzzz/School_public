@@ -5,9 +5,25 @@
 #include <iostream>
 #include "priority_queue_linked_list.h"
 
-template <typename T>
-void PriorityQueueList<T>::push(const T &data, unsigned int priority) {
-    Node *newNode = new Node(data, priority, nullptr);
+PriorityQueueList::PriorityQueueList() {
+    head = nullptr;
+    tail = nullptr;
+    size = 0;
+}
+
+PriorityQueueList::~PriorityQueueList() {
+    Node *current = head;
+    Node *next = nullptr;
+
+    while (current != nullptr) {
+        next = current->next;
+        delete current;
+        current = next;
+    }
+}
+
+void PriorityQueueList::push(int data, unsigned int priority) {
+    Node *newNode = new Node(data, priority);
     if (head == nullptr) {
         head = newNode; // ustawienie wskaznika head i tail na nowy element jako ze jest to jedyny element w liscie
         tail = newNode;
@@ -18,44 +34,55 @@ void PriorityQueueList<T>::push(const T &data, unsigned int priority) {
     size++;
 }
 
-template <typename T>
-const T PriorityQueueList<T>::removeMin() {
-    Node *temp = head;
-    Node *prev = nullptr;
-    Node *minNode = head;
-    Node *minPrev = nullptr;
-    T minData = head->data;
-    unsigned int minPriority = head->priority;
-    // Przeszukujemy listę w poszukiwaniu elementu o najniższym priorytecie
-    while (temp != nullptr) {
-        if (temp->priority < minPriority) {
-            minData = temp->data;
-            minPriority = temp->priority;
-            minNode = temp;
-            minPrev = prev;
-        }
-        prev = temp;
-        temp = temp->next;
-    }
-    // Usuwamy element o najniższym priorytecie
-    if (minPrev == nullptr) {  // jeśli element o najniższym priorytecie jest głową
-        head = minNode->next;
+int PriorityQueueList::extractMax() {
+    if (size == 0) {
+        std::cout << "Kolejka jest pusta" << std::endl;
+        return 0;
     } else {
-        minPrev->next = minNode->next;
+        Node *temp = head;
+        Node *maxNode = head;
+        unsigned int maxPriority = head->priority;
+        int maxData = head->data;
+        while (temp != nullptr) {
+            if (temp->priority > maxPriority) {
+                maxData = temp->data;
+                maxPriority = temp->priority;
+                maxNode = temp;
+            }
+            temp = temp->next;
+        }
+        delete maxNode;
+        size--;
+        return maxData;
     }
-    delete minNode;
-    size--;
-    return minData;
 }
 
+int PriorityQueueList::peek() {
+    if(size == 0) {
+        std::cout << "Kolejka jest pusta" << std::endl;
+        return 0;
+    } else {
+        Node *temp = head;
+        Node *maxNode = head;
+        unsigned int maxPriority = head->priority;
+        int maxData = head->data;
+        while (temp != nullptr) {
+            if (temp->priority > maxPriority) {
+                maxData = temp->data;
+                maxPriority = temp->priority;
+                maxNode = temp;
+            }
+            temp = temp->next;
+        }
+        return maxData;
+    }
+}
 
-template <typename T>
-bool PriorityQueueList<T>::empty() {
+bool PriorityQueueList::empty() {
     return size == 0;
 }
 
-template <typename T>
-void PriorityQueueList<T>::printAll() {
+void PriorityQueueList::printAll() {
     Node *current = head;
     while (current != nullptr) {
         std::cout << "'" << current->data << "'" << "   |   Priorytet: " << current->priority << std::endl;
@@ -64,13 +91,11 @@ void PriorityQueueList<T>::printAll() {
     std::cout << std::endl;
 }
 
-template <typename T>
-int PriorityQueueList<T>::getSize() {
+int PriorityQueueList::getSize() {
     return size;
 }
 
-template <typename T>
-void PriorityQueueList<T>::modifyPriority(const T &data, unsigned int newPriority) {
+void PriorityQueueList::modifyPriority(int data, unsigned int newPriority) {
     Node *temp = head;
     while (temp != nullptr) {
         if (temp->data == data) {
@@ -80,24 +105,3 @@ void PriorityQueueList<T>::modifyPriority(const T &data, unsigned int newPriorit
         temp = temp->next;
     }
 }
-
-template <typename T>
-T PriorityQueueList<T>::peek() {
-    // Make a function that returns the element with the lowest priority without removing it
-    Node *temp = head;
-    Node *minNode = head;
-    T minData = head->data;
-    unsigned int minPriority = head->priority;
-    while (temp != nullptr) {
-        if (temp->priority < minPriority) {
-            minData = temp->data;
-            minPriority = temp->priority;
-            minNode = temp;
-        }
-        temp = temp->next;
-    }
-    return minData;
-}
-
-template class PriorityQueueList<int>;
-template class PriorityQueueList<std::string>;
