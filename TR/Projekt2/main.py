@@ -82,15 +82,26 @@ plt.grid()
 plt.show()
 
 # Tworzenie wartości dla osi X
-x_values = np.linspace(0, 10, 1000)
+x_values = np.linspace(0, 8, 1000)
 
 # Obliczanie wartości dla osi Y (argument funkcji)
-y_values = np.abs(np.angle(Nyq(x_values, 11)+1))
+y_values_michaj = np.angle(michaj(x_values)) % (2*np.pi)
 
 # Tworzenie wykresu
-plt.plot(x_values, y_values)
+plt.plot(x_values, y_values_michaj)
 plt.xlabel('Wartość w')
 plt.ylabel('Argument funkcji michaj(w)')
 plt.title('Zmiana argumentu funkcji michaj(w)')
+plt.grid(True)
+plt.show()
+
+# Obliczanie wartości dla osi Y (argument funkcji)
+y_values_nyquist = np.angle(Nyq(x_values,11)+1) % (2*np.pi)
+
+# Tworzenie wykresu
+plt.plot(x_values, y_values_nyquist)
+plt.xlabel('Wartość w')
+plt.ylabel('Argument funkcji Nyq(w)')
+plt.title('Zmiana argumentu funkcji Nyq(w)')
 plt.grid(True)
 plt.show()
