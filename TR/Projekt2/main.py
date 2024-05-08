@@ -104,5 +104,3 @@ plt.ylabel('Argument funkcji Nyquista')
 plt.title('Zmiana argumentu funkcji Nyquista')
 plt.grid(True)
 plt.show()
-
-# Checking
