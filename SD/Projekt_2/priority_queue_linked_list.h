@@ -5,28 +5,31 @@
 #ifndef PROJEKT_2_PRIORITY_QUEUE_LINKED_LIST_H
 #define PROJEKT_2_PRIORITY_QUEUE_LINKED_LIST_H
 
-template <typename T>
+struct Node {
+    int data;
+    unsigned int priority;
+    Node *next;
+
+    Node(int data, unsigned int priority){
+        this->data = data;
+        this->priority = priority;
+        this->next = nullptr;
+    }
+};
 
 class PriorityQueueList {
-    struct Node {
-        T data;
-        unsigned int priority;
-        Node *next;
-
-        Node(const T &data, unsigned int priority, Node *next) : data(data), priority(priority), next(next){}
-    };
-
-    Node *head; // wskaznik na poczatek kolejki
-    Node *tail; // wskaznik na koniec kolejki
+    Node *head;
+    Node *tail;
     unsigned int size;
 
 public:
 
-    PriorityQueueList() : head(nullptr), tail(nullptr), size(0) {}
+    PriorityQueueList();
+    ~PriorityQueueList();
 
-    void push(const T &data, unsigned int priority);
+    void push(int data, unsigned int priority);
 
-    const T removeMin();
+    int extractMax();
 
     bool empty();
 
@@ -34,18 +37,9 @@ public:
 
     int getSize();
 
-    void modifyPriority(const T &data, unsigned int newPriority);
+    void modifyPriority(int data, unsigned int newPriority);
 
-    T peek();
-
-    ~PriorityQueueList() {
-        while (head != nullptr) {
-            Node *temp = head;
-            head = head->next;
-            delete temp;
-        }
-    }
+    int peek();
 };
-
 
 #endif //PROJEKT_2_PRIORITY_QUEUE_LINKED_LIST_H

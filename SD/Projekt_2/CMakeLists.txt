@@ -8,4 +8,9 @@ add_executable(Projekt_2 main.cpp
         priority_queue_linked_list.cpp
         priority_queue_linked_list.h
         priority_queue_heap.cpp
-        priority_queue_heap.h)
+        priority_queue_heap.h
+        heap_tests.cpp
+        heap_tests.h
+        list_tests.cpp
+        list_tests.h
+)
