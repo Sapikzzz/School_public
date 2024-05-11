@@ -1,0 +1,15 @@
+# ninja log v5
+2	305	1715121673808074604	CMakeFiles/Projekt_2.dir/priority_queue_heap.cpp.o	1a56eeb0c290839f
+2	330	1715121673833298435	CMakeFiles/Projekt_2.dir/priority_queue_linked_list.cpp.o	1629a3f802088e3
+213	243	1715121842002797959	Projekt_2	420e3db5ee25fa64
+3	213	1715121841971762785	CMakeFiles/Projekt_2.dir/main.cpp.o	475731fc932c73cd
+1	311	1715121673814248363	CMakeFiles/Projekt_2.dir/Users/sapik/CLionProjects/School_public/Algo/Projekt_1/priority_queue.cpp.o	19dfb94a83b8aa7d
+2	332	1715121673834625229	CMakeFiles/Projekt_2.dir/heap_tests.cpp.o	94bf7dc670881e90
+2	340	1715121673844402994	CMakeFiles/Projekt_2.dir/list_tests.cpp.o	f173ae7a768efa2f
+5	359	1715431303950536771	CMakeFiles/Projekt_2.dir/heap_tests.cpp.o	94bf7dc670881e90
+4	359	1715431303950205731	CMakeFiles/Projekt_2.dir/Users/sapik/CLionProjects/School_public/Algo/Projekt_1/priority_queue.cpp.o	19dfb94a83b8aa7d
+5	360	1715431303949713026	CMakeFiles/Projekt_2.dir/list_tests.cpp.o	f173ae7a768efa2f
+5	366	1715431303958258388	CMakeFiles/Projekt_2.dir/priority_queue_heap.cpp.o	1a56eeb0c290839f
+4	374	1715431303967314580	CMakeFiles/Projekt_2.dir/priority_queue_linked_list.cpp.o	1629a3f802088e3
+4	376	1715431303969345817	CMakeFiles/Projekt_2.dir/main.cpp.o	475731fc932c73cd
+376	402	1715431303995498190	Projekt_2	420e3db5ee25fa64
