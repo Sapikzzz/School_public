@@ -8,7 +8,7 @@ int main() {
     PriorityQueueList pqList;
     PriorityQueueHeap pqHeap;
 
-    for(int i= 0; i < 10000; i++) {  // Wypełnianie listy i kopca tą samą ilością elementów
+    for(int i= 0; i < 10000000; i++) {  // Wypełnianie listy i kopca tą samą ilością elementów
         pqList.push(i, i); // Test dla dodawania elementow do listy
         pqHeap.push(i, i); // Test dla dodawania elementow do kopca
     }
