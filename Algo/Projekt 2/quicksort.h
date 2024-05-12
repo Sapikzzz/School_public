@@ -10,5 +10,7 @@
 
 void quicksort(std::vector<Movie> &movies, int low, int high);
 
+int partition(std::vector<Movie> &movies, int low, int high);
+
 
 #endif //QUICKSORT_H

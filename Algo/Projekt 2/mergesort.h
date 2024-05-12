@@ -10,5 +10,7 @@
 
 void mergesort(std::vector<Movie> &movies, int left, int right);
 
+void merge(std::vector<Movie> &movies, int left, int mid, int right);
+
 
 #endif //MERGESORT_H
