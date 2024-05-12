@@ -5,6 +5,10 @@
 #ifndef QUICKSORT_H
 #define QUICKSORT_H
 
-void quicksort(int *array, int left, int right);
+#include <vector>
+#include "movie.h"
+
+void quicksort(std::vector<Movie> &movies, int low, int high);
+
 
 #endif //QUICKSORT_H

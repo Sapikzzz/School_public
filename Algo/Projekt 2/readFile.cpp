@@ -3,11 +3,12 @@
 //
 
 #include "readFile.h"
-
+#include "movie.h"
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
-void readFile(std::string filename, std::vector<Movie> &movies) {
+void readFile(std::string filename, std::vector<Movie> &movies, int amount) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Could not open the file " << filename << std::endl;
@@ -20,23 +21,27 @@ void readFile(std::string filename, std::vector<Movie> &movies) {
     // Example line: 1,The Shawshank Redemption,9.3
     // Filter out the index, and read the title and rating
     // There are lines withouth rating, skip them
-    while (std::getline(file, line)) {
-        std::string title;
-        int rating;
-        std::size_t pos = line.find(',');
-        if (pos == std::string::npos) {
-            std::cerr << "Invalid line: " << line << std::endl;
-            continue;
+    while(std::getline(file, line) && amount-- > 0) {
+        std::stringstream tmp(line);
+        std::string index, title, rating;
+        std::getline(tmp, index, ',');
+        std::getline(tmp, title, ',');
+
+        while(title.front() == '"') {
+            std::string tmpName;
+            if(title.back() == '"') {
+                break;
+            }
+            std::getline(tmp, tmpName, ',');
+            title += tmpName;
         }
-        title = line.substr(pos + 1);
-        pos = title.find(',');
-        if (pos == std::string::npos) {
-            std::cerr << "Invalid line: " << line << std::endl;
-            continue;
+
+        std::getline(tmp, rating, ',');
+        if(!rating.empty()) {
+            movies.push_back({title, std::stoi(rating)});
         }
-        title = title.substr(0, pos);
-        rating = std::stoi(line.substr(pos + 1));
-        movies.push_back({title, rating});
     }
+
+    file.close();
     return;
 }
