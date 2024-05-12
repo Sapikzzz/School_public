@@ -6,25 +6,23 @@
 #include <vector>
 #include "movie.h"
 
-void merge(std::vector<Movie> &movies, int left, int middle, int right) {
-    int left_size = middle - left + 1; // size of left subarray
-    int right_size = right - middle;    // size of right subarray
+void merge(std::vector<Movie> &movies, int low, int mid, int high) {
+    int left_size = mid - low + 1;
+    int right_size = high - mid;
 
-    std::vector<Movie> L(left_size);  // Creating temporary vectors
-    std::vector<Movie> R(right_size);
+    std::vector<Movie> L(left_size), R(right_size);
 
-    // Copying data to temporary vectors L[] and R[]
     for (int i = 0; i < left_size; i++) {
-        L[i] = movies[left + i];
+        L[i] = movies[low + i];
     }
     for (int j = 0; j < right_size; j++) {
-        R[j] = movies[middle + 1 + j];
+        R[j] = movies[mid + 1 + j];
     }
 
     int i = 0;
     int j = 0;
-    int k = 0;
-    // Merging the temporary vectors back into movies[]
+    int k = low;
+
     while (i < left_size && j < right_size) {
         if (L[i].rating <= R[j].rating) {
             movies[k] = L[i];
@@ -49,13 +47,13 @@ void merge(std::vector<Movie> &movies, int left, int middle, int right) {
     }
 }
 
-void mergesort(std::vector<Movie> &movies, int left, int right) {
-    if (left < right) {
-        int middle = left + (right - left) / 2;
+void mergesort(std::vector<Movie> &movies, int low, int high) {
+    if (low < high) {
+        int mid = low + (high - low) / 2;
 
-        mergesort(movies, left, middle);
-        mergesort(movies, middle + 1, right);
+        mergesort(movies, low, mid);
+        mergesort(movies, mid + 1, high);
 
-        merge(movies, left, middle, right);
+        merge(movies, low, mid, high);
     }
 }
