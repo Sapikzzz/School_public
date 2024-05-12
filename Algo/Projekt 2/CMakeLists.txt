@@ -10,4 +10,6 @@ add_executable(Projekt_2 main.cpp
         readFile.h
         movie.h
         bucketsort.cpp
+        mergesort.cpp
+        mergesort.h
 )
