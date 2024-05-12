@@ -7,5 +7,8 @@
 
 #include <string>
 #include <vector>
+#include "movie.h"
+
+void readFile(std::string filename, std::vector<Movie> &movies);
 
 #endif //READFILE_H

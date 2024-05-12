@@ -8,4 +8,5 @@ add_executable(Projekt_2 main.cpp
         quicksort.h
         readFile.cpp
         readFile.h
+        movie.h
 )

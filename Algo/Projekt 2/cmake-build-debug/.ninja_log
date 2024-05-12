@@ -1,0 +1,7 @@
+# ninja log v5
+0	22	1715544981187063793	CMakeFiles/Projekt_2.dir/quicksort.cpp.o	a38eecb08006dd44
+0	232	1715544981395635826	CMakeFiles/Projekt_2.dir/main.cpp.o	ee15250f0b9af715
+0	292	1715544981455399472	CMakeFiles/Projekt_2.dir/readFile.cpp.o	6aeb0b5f707b2452
+292	317	1715544981481537996	Projekt_2	a4bffedc87a2ef82
+2	273	1715545092886008543	CMakeFiles/Projekt_2.dir/readFile.cpp.o	6aeb0b5f707b2452
+273	299	1715545092912259651	Projekt_2	a4bffedc87a2ef82
