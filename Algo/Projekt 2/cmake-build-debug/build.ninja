@@ -67,6 +67,12 @@ build CMakeFiles/Projekt_2.dir/readFile.cpp.o: CXX_COMPILER__Projekt_2_unscanned
   OBJECT_DIR = CMakeFiles/Projekt_2.dir
   OBJECT_FILE_DIR = CMakeFiles/Projekt_2.dir
 
+build CMakeFiles/Projekt_2.dir/bucketsort.cpp.o: CXX_COMPILER__Projekt_2_unscanned_Debug /Users/sapik/CLionProjects/School_public/Algo/Projekt$ 2/bucketsort.cpp || cmake_object_order_depends_target_Projekt_2
+  DEP_FILE = CMakeFiles/Projekt_2.dir/bucketsort.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/Projekt_2.dir
+  OBJECT_FILE_DIR = CMakeFiles/Projekt_2.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Projekt_2
@@ -75,7 +81,7 @@ build CMakeFiles/Projekt_2.dir/readFile.cpp.o: CXX_COMPILER__Projekt_2_unscanned
 #############################################
 # Link the executable Projekt_2
 
-build Projekt_2: CXX_EXECUTABLE_LINKER__Projekt_2_Debug CMakeFiles/Projekt_2.dir/main.cpp.o CMakeFiles/Projekt_2.dir/quicksort.cpp.o CMakeFiles/Projekt_2.dir/readFile.cpp.o
+build Projekt_2: CXX_EXECUTABLE_LINKER__Projekt_2_Debug CMakeFiles/Projekt_2.dir/main.cpp.o CMakeFiles/Projekt_2.dir/quicksort.cpp.o CMakeFiles/Projekt_2.dir/readFile.cpp.o CMakeFiles/Projekt_2.dir/bucketsort.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
   OBJECT_DIR = CMakeFiles/Projekt_2.dir
   POST_BUILD = :
