@@ -23,8 +23,8 @@ void merge(std::vector<Movie> &movies, int left, int middle, int right) {
 
     int i = 0;
     int j = 0;
-    int k = left;
-
+    int k = 0;
+    // Merging the temporary vectors back into movies[]
     while (i < left_size && j < right_size) {
         if (L[i].rating <= R[j].rating) {
             movies[k] = L[i];

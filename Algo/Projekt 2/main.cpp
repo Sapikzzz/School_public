@@ -13,8 +13,8 @@ int main() {
     readFile("projekt2_dane.csv", movies, 500000);
     auto start = std::chrono::high_resolution_clock::now();
     //quicksort(movies, 0, movies.size() - 1);
-    //bucketsort(movies);
-    mergesort(movies, 0, movies.size() - 1);
+    bucketsort(movies);
+    //mergesort(movies, 0, movies.size() - 1);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
     std::cout << "Sorting took: " << diff.count() << "s" << std::endl;
