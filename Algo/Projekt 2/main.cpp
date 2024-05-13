@@ -10,15 +10,18 @@
 #include <chrono>
 
 int main() {
-    std::vector<Movie> movies;
-    readFile("projekt2_dane.csv", movies, 1000000);
+    int amount = 1000000;
+    std::vector<Movie> movies_quick, movies_bucket, movies_merge;
+    readFile("projekt2_dane.csv", movies_quick, amount);
+    readFile("projekt2_dane.csv", movies_bucket, amount);
+    readFile("projekt2_dane.csv", movies_merge, amount);
     //quicksort(movies, 0, movies.size() - 1);
     //bucketsort(movies);
     //mergesort(movies, 0, movies.size() - 1);
 
-    test_merge(movies);
-    test_quick(movies);
-    test_bucket(movies);
+    test_quick(movies_quick);
+    test_bucket(movies_bucket);
+    test_merge(movies_merge);
 
     //
     // std::cout << "Sorted movies by rating:" << std::endl;
