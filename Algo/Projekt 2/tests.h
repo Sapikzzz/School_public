@@ -18,8 +18,11 @@ double mean(std::vector<Movie> &movies);
 
 double median(std::vector<Movie> &movies);
 
-void test_time(std::vector<Movie> movies, int amount);
+void test_quick(std::vector<Movie> movies);
+void test_bucket(std::vector<Movie> movies);
+void test_merge(std::vector<Movie> movies);
 
 bool is_sorted(std::vector<Movie> &movies);
+
 
 #endif //TESTS_H

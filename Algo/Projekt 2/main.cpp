@@ -11,14 +11,14 @@
 
 int main() {
     std::vector<Movie> movies;
-    //readFile("projekt2_dane.csv", movies, 100);
+    readFile("projekt2_dane.csv", movies, 1000000);
     //quicksort(movies, 0, movies.size() - 1);
     //bucketsort(movies);
     //mergesort(movies, 0, movies.size() - 1);
-    test_time(movies, 10000);
-    test_time(movies, 100000);
-    test_time(movies, 500000);
-    test_time(movies, 1000000);
+
+    test_merge(movies);
+    test_quick(movies);
+    test_bucket(movies);
 
     //
     // std::cout << "Sorted movies by rating:" << std::endl;

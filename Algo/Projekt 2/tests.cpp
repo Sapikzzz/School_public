@@ -38,7 +38,7 @@ bool is_sorted(std::vector<Movie> &movies) {
     return true;
 }
 
-void test_time(std::vector<Movie> movies, int elements) {
+void test_quick(std::vector<Movie> movies, int elements) {
     readFile("projekt2_dane.csv", movies, elements);
     auto start_q = std::chrono::high_resolution_clock::now();
     quicksort(movies , 0, movies.size() - 1);
@@ -53,8 +53,23 @@ void test_time(std::vector<Movie> movies, int elements) {
     std::cout << "  Mediana: " << median(movies);
 
     std::cout << std::endl;
+}
 
-    readFile("projekt2_dane.csv", movies, elements);
+void test_merge(std::vector<Movie> &movies) {
+    auto start_m = std::chrono::high_resolution_clock::now();
+    mergesort(movies, 0, movies.size() - 1);
+    auto end_m = std::chrono::high_resolution_clock::now();
+    std::cout << "Mergesort took: " << std::chrono::duration_cast<std::chrono::milliseconds>(end_m - start_m).count() << "ms";
+    if(is_sorted(movies)) {
+        std::cout << "  Sorted";
+    } else {
+        std::cout << "  Not sorted";
+    }
+    std::cout << "  Srednia: " << mean(movies);
+    std::cout << "  Mediana: " << median(movies);
+}
+
+void test_bucket(std::vector<Movie> movies) {
     auto start_b = std::chrono::high_resolution_clock::now();
     bucketsort(movies);
     auto end_b = std::chrono::high_resolution_clock::now();
@@ -65,21 +80,6 @@ void test_time(std::vector<Movie> movies, int elements) {
         std::cout << "  Not sorted";
     }
     std::cout << "  Srednia: " << mean(movies);
-    std::cout << "  Mediana: " << median(movies);
-
-    std::cout << std::endl;
-
-    readFile("projekt2_dane.csv", movies, elements);
-    auto start_m = std::chrono::high_resolution_clock::now();
-    mergesort(movies, 0, movies.size() - 1);
-    auto end_m = std::chrono::high_resolution_clock::now();
-    std::cout << "Mergesort took: " << std::chrono::duration_cast<std::chrono::milliseconds>(end_m - start_m).count() << "ms";
-    if(is_sorted(movies)) {
-        std::cout << "  Sorted";
-    } else {
-        std::cout << "  Not sorted";
-    }
-    std::cout << "  Srednia: " << mean(movies) ;
     std::cout << "  Mediana: " << median(movies);
 
     std::cout << std::endl;
