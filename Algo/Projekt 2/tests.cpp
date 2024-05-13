@@ -13,7 +13,7 @@
 #include <chrono>
 
 double mean(std::vector<Movie> &movies) {
-    int sum;
+    double sum;
     for(int i = 0; i < movies.size(); i++) {
         sum += movies[i].rating;
     }
