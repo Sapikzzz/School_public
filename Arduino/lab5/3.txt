@@ -1,0 +1,117 @@
+#include <avr/io.h>
+#include <util/delay.h>
+#include <avr/interrupt.h>
+
+#ifndef _BV
+#define _BV(bit) (1<<(bit))
+#endif
+
+#ifndef sbi
+#define sbi(reg,bit) reg |= (_BV(bit))
+#endif
+
+#ifndef cbi
+#define cbi(reg,bit) reg &= ~(_BV(bit))
+#endif
+
+#ifndef tbi
+#define tbi(reg,bit) reg ^= (_BV(bit))
+#endif
+
+#define BAUD 9600
+#define BAUDDIVIDER ((F_CPU)/(BAUD*16UL)-1)
+
+int time = 0;
+
+void timerInit() {
+    // Wybranie trybu pracy CTC z TOP OCR1A
+    sbi(TCCR1B, WGM12);
+    cbi(TCCR1B, WGM13);
+    cbi(TCCR1A, WGM11);
+    cbi(TCCR1A, WGM10);
+
+    // Wybranie dzielnika częstotliwości - częstotliwość Atmega328: 16 MHz
+    sbi(TCCR1B, CS12);
+    cbi(TCCR1B, CS11);
+    cbi(TCCR1B, CS10);
+
+    // Zapisanie do OCR1A wartości odpowiadającej 0,5s
+    OCR1A = 62500; // Wybrana opcja prescalera clk/256 == 16MHz/256 = 62 500
+                   // 62500 ilość operacji w ciągu jednej sekundy, więc dla 0,5s == 62500/2
+
+    // Uruchomienie przerwania OCIE1A
+    sbi(TIMSK1, OCIE1A);
+}
+
+void USART_Init() {
+    UBRR0 = BAUDDIVIDER;
+    sbi(UCSR0B, RXEN0);
+    sbi(UCSR0B, TXEN0);
+    sbi(UCSR0C, UCSZ01);
+    sbi(UCSR0C, UCSZ00);
+}
+
+void USART_SendByte(uint8_t data) {
+    while (!(UCSR0A & (1 << UDRE0)));
+    UDR0 = data;
+}
+
+void USART_SendString(char* str) {
+    while (*str) {
+        USART_SendByte(*str++);
+    }
+}
+
+uint8_t USART_ReceiveByte() {
+    while (!(UCSR0A & (1 << RXC0)));
+    return UDR0;
+}
+
+int main() {
+    bool led_state = 0;
+    timerInit();
+    sei();
+    USART_Init();
+
+    // Led init
+    sbi(DDRB, PB0); // Ustawienie PB0 jako wyjście (LED1)
+
+    // Button init
+    cbi(DDRD, PD2); // Ustawienie PD2 jako wejście (przycisk)
+    sbi(PORTD, PD2); // Włączenie rezystora podciągającego
+
+    while (1) {
+        uint8_t received_byte = USART_ReceiveByte();
+
+        switch (received_byte) {
+            case 'a':
+                sbi(PORTB, PB0);
+                USART_SendString("LED1 ON\r\n");
+                break;
+            case 's':
+                cbi(PORTB, PB0);
+                USART_SendString("LED1 OFF\r\n");
+                break;
+            case 'd':
+                if (bit_is_clear(PIND, PD2)) {
+                    USART_SendString("Button pressed\r\n");
+                } else {
+                    USART_SendString("Button released\r\n");
+                }
+                break;
+            case 'f':
+                USART_SendString("Seconds: ");
+                char buffer[6];
+                itoa(time, buffer, 10);
+                USART_SendString(buffer);
+                USART_SendString("\r\n");
+                break;
+        }
+    }
+
+    return 0;
+}
+
+ISR(TIMER1_COMPA_vect) {
+    time++;
+}

@@ -1,0 +1,78 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
+#ifndef _BV
+#define _BV(bit)        (1<<(bit))
+#endif
+
+#ifndef sbi
+#define sbi(reg,bit)    reg |= (_BV(bit))
+#endif
+
+#ifndef cbi
+#define cbi(reg,bit)    reg &= ~(_BV(bit))
+#endif
+
+#ifndef tbi
+#define tbi(reg,bit)    reg ^= (_BV(bit))
+#endif
+
+#define BAUDRATE 19200
+#define BAUD_PRESCALER (((F_CPU / (BAUDRATE * 16UL))) - 1)
+
+void USART_Init() {
+    // Konfiguracja prędkości transmisji
+    UBRR0 = 52;
+
+    // Rozmiar danych: 8 bitów
+    UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);
+
+    // Brak bitu parzystości
+    cbi(UCSR0C, UPM01);
+    cbi(UCSR0C, UPM00);
+
+    // 1 bit stopu
+    cbi(UCSR0C, USBS0);
+
+    // Włączenie nadajnika i odbiornika
+    sbi(UCSR0B, RXEN0);
+    sbi(UCSR0B, TXEN0);
+}
+
+void USART_SendByte(uint8_t data) {
+    // Czekaj, aż bufor transmisji będzie gotowy
+    while (!(UCSR0A & (1 << UDRE0)));
+
+    // Wyślij dane
+    UDR0 = data;
+}
+
+void USART_SendString(char* str) {
+    while (*str) {
+        USART_SendByte(*str++);
+    }
+}
+
+int main() {
+    uint16_t counter = 1;
+    char message[20];
+
+    // Inicjalizacja UART
+    USART_Init();
+
+    while (1) {
+        // Tworzenie napisu
+        sprintf(message, "Hello World: %u\r\n", counter);
+
+        // Wysyłanie napisu przez UART
+        USART_SendString(message);
+
+        // Opóźnienie 1 sekundy
+        _delay_ms(1000);
+
+        // Inkrementacja licznika
+        counter++;
+    }
+
+    return 0;
+}

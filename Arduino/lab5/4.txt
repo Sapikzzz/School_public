@@ -1,0 +1,103 @@
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdlib.h>
+
+#ifndef _BV
+#define _BV(bit) (1<<(bit))
+#endif
+
+#ifndef sbi
+#define sbi(reg,bit) reg |= (_BV(bit))
+#endif
+
+#ifndef cbi
+#define cbi(reg,bit) reg &= ~(_BV(bit))
+#endif
+
+#define BAUD 9600
+#define BAUDDIVIDER ((F_CPU)/(BAUD*16UL)-1)
+
+void USART_Init() {
+    UBRR0 = 52;
+    sbi(UCSR0B, RXEN0);
+    sbi(UCSR0B, TXEN0);
+    sbi(UCSR0C, UCSZ01);
+    sbi(UCSR0C, UCSZ00);
+}
+
+void USART_SendByte(uint8_t data) {
+    while (!(UCSR0A & (1 << UDRE0)));
+    UDR0 = data;
+}
+
+void USART_SendString(char* str) {
+    while (*str) {
+        USART_SendByte(*str++);
+    }
+}
+
+uint8_t USART_ReceiveByte() {
+    while (!(UCSR0A & (1 << RXC0)));
+    return UDR0;
+}
+
+int getYear() {
+    char buffer[5];
+    int i = 0;  // Długość stringa
+    uint8_t byte;
+
+    while (i < 4) {
+        byte = USART_ReceiveByte();
+        if (byte >= '0' && byte <= '9') {
+            buffer[i] = byte;
+            i++;
+        } else if (byte == '\r') {
+            break;
+        }
+    }
+
+    if (i == 0) {
+        return -1;
+    }
+
+    return atoi(buffer);
+}
+
+int main() {
+    USART_Init();
+
+    while (1) {
+        USART_SendString("Podaj rok urodzenia: ");
+        int birthYear = getYear();
+
+        if (birthYear == -1) {
+            USART_SendString("Blad: Nie podano roku urodzenia.\r\n");
+            continue;
+        }
+
+        int currentYear = 2024;
+        int age = currentYear - birthYear;
+
+        if (age < 0 || age > 120) {
+            USART_SendString("Blad: Nieprawidlowy rok urodzenia.\r\n");
+            continue;
+        }
+
+        char message[50];
+        sprintf(message, "Masz %d lat, ", age);
+
+        if (age < 18) {
+            strcat(message, "jestes bardzo mlody.\r\n");
+        } else if (age < 25) {
+            strcat(message, "zycie dopiero przed Toba!\r\n");
+        } else if (age < 65) {
+            strcat(message, "jestes w pelni sil!\r\n");
+        } else {
+            strcat(message, "czas na emeryture!\r\n");
+        }
+
+        USART_SendString(message);
+    }
+
+    return 0;
+}
