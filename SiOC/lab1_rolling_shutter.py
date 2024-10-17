@@ -57,3 +57,4 @@ if True == 0:
 #xddasd
 #xddasd
 #test sstasadf
+#kolejny xdd 
