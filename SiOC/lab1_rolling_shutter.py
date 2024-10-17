@@ -51,3 +51,4 @@ for i, part in enumerate(parts):
     if (temp * multi > y_axis):
         break
 merged_image.save("merged_image.png")
+#xdd
